@@ -20,13 +20,16 @@ export const route = functions.https.onRequest((request: functions.Request, resp
 	response.setHeader("Content-Type", "application/json");
 	response.setHeader("Access-Control-Allow-Origin", "*");
 
-	const from = JSON.parse(request.query.from);
-	const to = JSON.parse(request.query.to);
+	console.log("request: " + JSON.stringify(request.query));
+	const fromLat = request.query.fromLat;
+	const fromLng = request.query.fromLng;
+	const toLat = request.query.toLat;
+	const toLng = request.query.toLng;
 
 	mapsClient.directions({
 
-		origin: from,
-		destination: to,
+		origin: { lat: fromLat, lng: fromLng },
+		destination: { lat: toLat, lng: toLng },
 		language: "en",
 		avoid: ["highways"],
 		mode: "bicycling",
